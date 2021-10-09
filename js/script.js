@@ -41,3 +41,22 @@ design.addEventListener("change", (e) =>{
         }
     }
 })
+
+// this part of the code takes care of the functionality of the register part of the form.
+let activities = document.querySelector("#activities");
+let cost = document.querySelector("#activities-cost");
+// stores the cost of the activities
+let totalCost = 0;
+
+activities.addEventListener("change", (e)=>{
+    // stores the value of the data-cost attribute of the element.
+    let dataCost = e.target.getAttribute("data-cost");
+    dataCost = parseInt(dataCost);
+    // condition to check if the checkbox is checked and update accordingly
+    if(e.target.checked === true){
+        totalCost+=dataCost;
+    }else{
+        totalCost-=dataCost;
+    }
+    cost.innerHTML = `Total: $${totalCost}`;
+})
