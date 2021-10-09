@@ -60,3 +60,31 @@ activities.addEventListener("change", (e)=>{
     }
     cost.innerHTML = `Total: $${totalCost}`;
 })
+
+// this part takes care of the payment method section of the form
+let payment = document.querySelector("#payment");
+let creditCard = document.querySelector("#credit-card");
+let paypal = document.querySelector("#paypal");
+let bitcoin = document.querySelector("#bitcoin");
+// hide the paypal and bitcoin initially
+paypal.style.display = "none";
+bitcoin.style.display = "none";
+
+// makes the field selected visible and hides the ones that were not selected
+payment.addEventListener("change", (e)=>{
+    if(payment[1].selected === true){
+        creditCard.style.display = "block";
+        paypal.style.display = "none";
+        bitcoin.style.display = "none";
+    }else if(payment[2].selected === true){
+        creditCard.style.display = "none";
+        paypal.style.display = "block";
+        bitcoin.style.display = "none";
+    }else if(payment[3].selected === true){
+        creditCard.style.display = "none";
+        paypal.style.display = "none";
+        bitcoin.style.display = "block";
+    }
+})
+
+// this part takes care of the form validation...
