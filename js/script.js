@@ -17,3 +17,27 @@ jobRole.addEventListener("change", (e)=>{
         otherJob.style.display = "none";
     }
 })
+
+// takes care of the T-Shirt part of the form
+let design = document.querySelector("#design");
+let color = document.querySelector("#color");
+let optionChild = color.children;
+
+color.disabled = true;
+
+design.addEventListener("change", (e) =>{
+    color.disabled = false;
+// loop over the option element children of the the Color select element
+    for(let i=0;i<optionChild.length;i++){
+        let value = e.target.value;
+        let dataTheme = optionChild[i].getAttribute("data-theme");
+
+        if(value === dataTheme){
+            optionChild[i].hidden = false;
+            optionChild[i].selected = true;
+        }else{
+            optionChild[i].hidden = true;
+            optionChild[i].selected = false;
+        }
+    }
+})
