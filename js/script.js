@@ -88,3 +88,69 @@ payment.addEventListener("change", (e)=>{
 })
 
 // this part takes care of the form validation...
+
+// namefield variable here
+let emailField = document.querySelector("#email");
+// activities variable here
+let cardNumber = document.querySelector("#cc-num");
+let zipCode = document.querySelector("#zip");
+let cvv = document.querySelector("#cvv");
+let mainForm = document.querySelector("form");
+
+// test regex variables for each form field
+let nameRegex = /\w+/;
+let cardNumberRegex = /^\d{13,16}$/;
+let emailRegex = /\w+\.?\w+@\w+\.\w+\.?\w+/;
+let zipCodeRegex = /^\d{5}$/;
+let cvvRegex = /^\d{3}$/;
+
+// validates the entire form when submitted
+mainForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    // name validation
+    let nameFieldValue = nameField.value;
+    // console.log(nameFieldValue)
+    let nameTestResult = nameRegex.test(nameFieldValue); 
+    // console.log(nameTestResult);
+    if (nameTestResult === false){
+        e.preventDefault()
+        // console.log("the name field is empty")
+    }
+    // email validatiion
+    let emailTestResult = emailRegex.test(emailField.value);
+    if(emailTestResult === false){
+        e.preventDefault()
+        // console.log("invlid email");
+    }
+
+    // register for activities validation, atleast one activity must be selected.
+
+    // access all the input elements here
+    let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    // loop through the input element array to see if one was checked or not
+    for(let i=0; i<allCheckboxes.length; i++){
+        if(allCheckboxes[1].checked === false){
+            e.preventDefault()
+            // console.log("No one checked")
+        }
+    }
+
+    // credit card validation, this works only if credit card is the selected payment option
+
+    // makes sure we selected the credit card opiton only
+    if(payment[1].selected === true){
+        // validates card number
+        if(cardNumberRegex.test(cardNumber.value)=== false){
+            e.preventDefault();
+        }
+        // validates zip code
+        if(zipCodeRegex.test(zipCode.value)=== false){
+            e.preventDefault();
+        }
+        // validates cvv of the card
+        if(cvvRegex.test(cvv.value)=== false){
+            e.preventDefault();
+        }
+    }
+    
+})
