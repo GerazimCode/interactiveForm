@@ -100,11 +100,19 @@ let mainForm = document.querySelector("form");
 let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 
 // test regex variables for each form field
-let nameRegex = /\w+/;
+let nameRegex = /^\D\w+$/;
 let cardNumberRegex = /^\d{13,16}$/;
 let emailRegex = /\w+\.?\w+@\w+\.\w+\.?\w+/;
 let zipCodeRegex = /^\d{5}$/;
 let cvvRegex = /^\d{3}$/;
+
+// these variables access the erroe messages of the form or the hint to hide and display.
+let nameMessage = document.getElementById("name-hint");
+let emailMessage = document.getElementById("email-hint");
+let activitiesMessage = document.getElementById("activities-hint");
+let creditCardMessage = document.getElementById("cc-hint");
+let zipMessage = document.getElementById("zip-hint");
+let cvvMessage = document.getElementById("cvv-hint");
 
 // validates the entire form when submitted
 mainForm.addEventListener("submit", (e)=>{
@@ -116,27 +124,43 @@ mainForm.addEventListener("submit", (e)=>{
     // console.log(nameTestResult);
     if (nameTestResult === false){
         e.preventDefault()
-        // console.log("the name field is empty")
+        nameField.parentNode.classList.add("not-valid");
+        nameField.parentNode.classList.remove("valid");
+        nameMessage.style.display ="block";
+    } else{
+        nameField.parentNode.classList.add("valid");
+        nameField.parentNode.classList.remove("not-valid");
+        nameMessage.style.display = "none";
     }
     // email validatiion
     let emailTestResult = emailRegex.test(emailField.value);
     if(emailTestResult === false){
         e.preventDefault()
-        // console.log("invlid email");
+        emailField.parentNode.classList.add("not-valid");
+        emailField.parentNode.classList.remove("valid");
+        emailMessage.style.display ="block";
+    }else{
+        emailField.parentNode.classList.add("valid");
+        emailField.parentNode.classList.remove("not-valid");
+        emailMessage.style.display = "none";
     }
 
-    // register for activities validation, atleast one activity must be selected.
+    // activities validation, atleast one activity must be selected.
 
-    // access all the input elements here
-    // let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     // loop through the input element array to see if one was checked or not
     for(let i=0; i<allCheckboxes.length; i++){
         if(allCheckboxes[1].checked === false){
             e.preventDefault()
-            // console.log("No one checked")
+            activities.parentNode.classList.add("not-valid");
+            activities.parentNode.classList.remove("valid");
+            activitiesMessage.style.display = "block";
+        } else {
+            activities.parentNode.classList.remove("not-valid");
+            activities.parentNode.classList.add("valid");
+            activitiesMessage.style.display = "none";
         }
+        
     }
-
     // credit card validation, this works only if credit card is the selected payment option
 
     // makes sure we selected the credit card opiton only
@@ -144,14 +168,35 @@ mainForm.addEventListener("submit", (e)=>{
         // validates card number
         if(cardNumberRegex.test(cardNumber.value)=== false){
             e.preventDefault();
+            cardNumber.parentNode.classList.add("not-valid");
+            // cardNumber.parentNode.classList.remove("valid");
+            creditCardMessage.style.display = "block";
+        } else{
+            cardNumber.parentNode.classList.remove("not-valid");
+            cardNumber.parentNode.classList.add("valid");
+            creditCardMessage.style.display = "none";
         }
         // validates zip code
         if(zipCodeRegex.test(zipCode.value)=== false){
             e.preventDefault();
+            zipCode.parentNode.classList.add("not-valid");
+            zipCode.parentNode.classList.remove("valid");
+            zipMessage.style.display = "block";
+        } else{
+            zipCode.parentNode.classList.remove("not-valid");
+            zipCode.parentNode.classList.add("valid");
+            zipMessage.style.display = "none";
         }
         // validates cvv of the card
         if(cvvRegex.test(cvv.value)=== false){
             e.preventDefault();
+            cvv.parentNode.classList.add("not-valid");
+            cvv.parentNode.classList.remove("valid");
+            cvvMessage.style.display = "block";
+        } else{
+            cvv.parentNode.classList.remove("not-valid");
+            cvv.parentNode.classList.add("valid");
+            cvvMessage.style.display = "none";
         }
     }
     
