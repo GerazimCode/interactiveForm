@@ -96,6 +96,8 @@ let cardNumber = document.querySelector("#cc-num");
 let zipCode = document.querySelector("#zip");
 let cvv = document.querySelector("#cvv");
 let mainForm = document.querySelector("form");
+// access all the input elements here
+let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 
 // test regex variables for each form field
 let nameRegex = /\w+/;
@@ -126,7 +128,7 @@ mainForm.addEventListener("submit", (e)=>{
     // register for activities validation, atleast one activity must be selected.
 
     // access all the input elements here
-    let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+    // let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
     // loop through the input element array to see if one was checked or not
     for(let i=0; i<allCheckboxes.length; i++){
         if(allCheckboxes[1].checked === false){
@@ -154,3 +156,18 @@ mainForm.addEventListener("submit", (e)=>{
     }
     
 })
+
+// accessibility 
+// let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+
+// loop over the activities checkbox
+for(let i=0; i<allCheckboxes.length; i++){
+    // make each activity listen for focus and blur event
+    allCheckboxes[i].addEventListener("focus", (e)=>{
+        e.target.parentNode.classList.add("focus");
+    })
+
+    allCheckboxes[i].addEventListener("blur", (e)=>{
+        e.target.parentNode.classList.remove("focus");
+    })
+}
