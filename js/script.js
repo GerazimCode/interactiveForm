@@ -3,7 +3,6 @@ let nameField = document.getElementById("name");
 nameField.focus();
 
 // following code hides the other job roles and shows it only when other is selected
-
 let jobRole = document.querySelector("#title");
 let otherJob = document.querySelector("#other-job-role");
 // hides the other job element by default upon reload
@@ -87,26 +86,25 @@ payment.addEventListener("change", (e)=>{
     }
 })
 
-// this part takes care of the form validation...
+// this part takes care of the whole form validation...
 
-// namefield variable here
 let emailField = document.querySelector("#email");
-// activities variable here
 let cardNumber = document.querySelector("#cc-num");
 let zipCode = document.querySelector("#zip");
 let cvv = document.querySelector("#cvv");
 let mainForm = document.querySelector("form");
-// access all the input elements here
+// the following line gets all the input elements with type checkbox
 let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+let activitiesBox = document.getElementById("activities-box");
 
-// test regex variables for each form field
+// test regex variables for each form field, simple regex for each field.
 let nameRegex = /^\D\w+$/;
 let cardNumberRegex = /^\d{13,16}$/;
-let emailRegex = /\w+\.?\w+@\w+\.\w+\.?\w+/;
+let emailRegex = /^\w+\.?\w+@\w+\.\w+\.?\w+$/;
 let zipCodeRegex = /^\d{5}$/;
 let cvvRegex = /^\d{3}$/;
 
-// these variables access the erroe messages of the form or the hint to hide and display.
+// these variables access the error messages of the form or the hint in order to hide and show them.
 let nameMessage = document.getElementById("name-hint");
 let emailMessage = document.getElementById("email-hint");
 let activitiesMessage = document.getElementById("activities-hint");
@@ -119,9 +117,7 @@ mainForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     // name validation
     let nameFieldValue = nameField.value;
-    // console.log(nameFieldValue)
     let nameTestResult = nameRegex.test(nameFieldValue); 
-    // console.log(nameTestResult);
     if (nameTestResult === false){
         e.preventDefault()
         nameField.parentNode.classList.add("not-valid");
@@ -144,32 +140,35 @@ mainForm.addEventListener("submit", (e)=>{
         emailField.parentNode.classList.remove("not-valid");
         emailMessage.style.display = "none";
     }
-
-    // activities validation, atleast one activity must be selected.
+    // activities validation, atleast one activity must be selected otherwise throw an error.
 
     // loop through the input element array to see if one was checked or not
+    let isChecked = "false";
     for(let i=0; i<allCheckboxes.length; i++){
-        if(allCheckboxes[1].checked === false){
-            e.preventDefault()
-            activities.parentNode.classList.add("not-valid");
-            activities.parentNode.classList.remove("valid");
-            activitiesMessage.style.display = "block";
-        } else {
-            activities.parentNode.classList.remove("not-valid");
-            activities.parentNode.classList.add("valid");
-            activitiesMessage.style.display = "none";
+        if(allCheckboxes[i].checked === true){
+            isChecked = "true";
+            break;
         }
-        
     }
-    // credit card validation, this works only if credit card is the selected payment option
+    if(isChecked === "false"){
+        e.preventDefault()
+        activities.classList.add("not-valid");
+        activities.classList.remove("valid");
+        activitiesMessage.style.display = "block";
+    } else {
+        activities.classList.remove("not-valid");
+        activities.classList.add("valid");
+        activitiesMessage.style.display = "none";
+    }
 
+    // credit card validation, this works only if credit card is the selected payment option
     // makes sure we selected the credit card opiton only
     if(payment[1].selected === true){
         // validates card number
         if(cardNumberRegex.test(cardNumber.value)=== false){
             e.preventDefault();
             cardNumber.parentNode.classList.add("not-valid");
-            // cardNumber.parentNode.classList.remove("valid");
+            cardNumber.parentNode.classList.remove("valid");
             creditCardMessage.style.display = "block";
         } else{
             cardNumber.parentNode.classList.remove("not-valid");
@@ -201,7 +200,6 @@ mainForm.addEventListener("submit", (e)=>{
     }
     
 })
-
 // accessibility 
 // let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 
@@ -216,3 +214,5 @@ for(let i=0; i<allCheckboxes.length; i++){
         e.target.parentNode.classList.remove("focus");
     })
 }
+
+// next -> exceed mark below
