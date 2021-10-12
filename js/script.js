@@ -202,6 +202,7 @@ mainForm.addEventListener("submit", (e)=>{
 })
 // accessibility 
 // let allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+// console.log(allCheckboxes);
 
 // loop over the activities checkbox
 for(let i=0; i<allCheckboxes.length; i++){
@@ -216,3 +217,4 @@ for(let i=0; i<allCheckboxes.length; i++){
 }
 
 // next -> exceed mark below
+
