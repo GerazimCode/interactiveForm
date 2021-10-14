@@ -65,7 +65,8 @@ let payment = document.querySelector("#payment");
 let creditCard = document.querySelector("#credit-card");
 let paypal = document.querySelector("#paypal");
 let bitcoin = document.querySelector("#bitcoin");
-// hide the paypal and bitcoin initially
+// following lines makes the credit card the default option & hides the paypal & bitcoin initially
+payment[1].selected = true;
 paypal.style.display = "none";
 bitcoin.style.display = "none";
 
